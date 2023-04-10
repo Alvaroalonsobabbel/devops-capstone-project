@@ -135,8 +135,8 @@ class TestAccountService(TestCase):
         data = resp.get_json()
         self.assertEqual(data["name"], account.name)
     
-    def test_account_not_found(self):
-        """It should return a 404"""
+    def test_account_not_found_read(self):
+        """It should return a 404 upon reading an account"""
         resp = self.client.get(f"{BASE_URL}/0")
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
@@ -154,4 +154,15 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         updated_account = resp.get_json()
         self.assertEqual(updated_account["name"], "Something Known")
+    
+    def test_account_not_found_update(self):
+        """It should return a 404 upon updating an account"""
+        resp = self.client.put(f"{BASE_URL}/0")
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_delete_account(self):
+        """It should delete an account"""
+        account = self._create_accounts(1)[0]
+        resp = self.client.delete(f"{BASE_URL}/{account.id}")
+        self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
 
