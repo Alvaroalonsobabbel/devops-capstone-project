@@ -134,7 +134,7 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
         self.assertEqual(data["name"], account.name)
-    
+
     def test_account_not_found_read(self):
         """It should return a 404 upon reading an account"""
         resp = self.client.get(f"{BASE_URL}/0")
@@ -154,7 +154,7 @@ class TestAccountService(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         updated_account = resp.get_json()
         self.assertEqual(updated_account["name"], "Something Known")
-    
+
     def test_account_not_found_update(self):
         """It should return a 404 upon updating an account"""
         resp = self.client.put(f"{BASE_URL}/0")
@@ -172,8 +172,8 @@ class TestAccountService(TestCase):
         resp = self.client.get(BASE_URL)
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
-        self.assertEqual(len(data), 5)        
-    
+        self.assertEqual(len(data), 5)
+
     def test_method_not_allowed(self):
         """It should not allow an illegal method call"""
         resp = self.client.delete(BASE_URL)
